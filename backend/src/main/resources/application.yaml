@@ -6,3 +6,7 @@ spring:
     url: ${BATCH_DB_URL}
     username: ${BATCH_DB_USERNAME}
     password: ${BATCH_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jooq:
+    sql-dialect: postgres
