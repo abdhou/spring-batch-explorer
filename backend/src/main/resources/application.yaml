@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: @project.artifactId@
+
+  datasource:
+    url: ${BATCH_DB_URL}
+    username: ${BATCH_DB_USERNAME}
+    password: ${BATCH_DB_PASSWORD}
