@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { JobInstanceList } from './pages/job-instance/job-instance-list';
 
 @Component({
   selector: 'app-root',
+  imports: [
+    JobInstanceList
+  ],
   template: `
-    <h1>Spring Batch Explorer</h1>
+    <app-job-instance-list />
   `
 })
 export class App {

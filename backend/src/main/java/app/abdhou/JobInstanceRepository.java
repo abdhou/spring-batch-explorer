@@ -18,7 +18,7 @@ public class JobInstanceRepository {
         var ji = table("batch_job_instance");
         var je = table("batch_job_execution");
 
-        var condition = jobName != null ? field(ji.getName() + ".job_name").eq(jobName) : noCondition();
+        var condition = jobName != null ? field(ji.getName() + ".job_name").like("%" + jobName + "%") : noCondition();
 
         var totalElements = dsl.fetchCount(ji, condition);
 
