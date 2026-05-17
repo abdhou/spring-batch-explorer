@@ -14,17 +14,31 @@ view execution details, and manage batch jobs without directly querying the data
 - **Dashboard**: Overview of total, completed, and failed jobs.
 - **Detailed Execution View**: Deep dive into specific job executions, including start/end times and exit codes.
 
-## Tech Stack
+## Usage
+
+Run the application using Docker. 
+
+```bash
+docker run --name batch-explorer \
+  -p 8080:8080 \
+  --network=host \
+  -e BATCH_DB_URL=jdbc:postgresql://localhost:5432/batch \
+  -e BATCH_DB_USERNAME=batch \
+  -e BATCH_DB_PASSWORD=batch \
+  abdhou/spring-batch-explorer:latest
+```
+
+## Contributing
+
+### Tech Stack
 
 - **Backend**:
-  - Java 25
-  - Spring Boot 4
-  - jOOQ
+    - Java 25
+    - Spring Boot 4
+    - jOOQ
 - **Frontend**:
-  - Angular 21
-  - Angular Material
-
-## Getting Started
+    - Angular 21
+    - Angular Material
 
 ### Prerequisites
 
@@ -61,6 +75,6 @@ The backend requires the following environment variables to connect to your data
    ```
    The frontend is configured to proxy API requests to `http://localhost:8080`.
 
-## API Endpoints
+### API Endpoints
 
 - `GET /api/job-instances`: Fetch a paginated list of job instances. Supports `jobName` filter and `index`/`size` pagination parameters.
