@@ -2,6 +2,9 @@ name: Build & Push Docker Image
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/spring-batch-explorer
@@ -25,4 +28,6 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: ${{ env.IMAGE_NAME }}:latest
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
