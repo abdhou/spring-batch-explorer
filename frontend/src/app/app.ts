@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { JobInstanceList } from './pages/job-instance/job-instance-list';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
-    JobInstanceList
+    RouterOutlet
   ],
   template: `
-    <app-job-instance-list />
+    <router-outlet />
   `
 })
 export class App {
