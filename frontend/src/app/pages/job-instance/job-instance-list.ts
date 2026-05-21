@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -54,8 +55,11 @@ import { MatInputModule } from '@angular/material/input';
         <mat-cell  mat-cell *matCellDef="let element"> {{element.lastExecutionStatus}} </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" />
+      <mat-row
+        *matRowDef="let jobInstance; columns: displayedColumns;"
+        (click)="router.navigate(['job-instances', jobInstance.id])"
+      />
     </mat-table>
 
     <mat-paginator
@@ -75,7 +79,8 @@ export class JobInstanceList implements OnInit {
 
   protected displayedColumns: string[] = ['id', 'jobName', 'executionCount', 'lastExecutionStatus'];
 
-  private http = inject(HttpClient);
+  protected router: Router = inject(Router);
+  private http: HttpClient = inject(HttpClient);
 
   ngOnInit(): void {
     this.fetchJobInstances();
