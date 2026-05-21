@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-job-instance-list',
@@ -14,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
     FormsModule
   ],
   styles: `
@@ -29,6 +31,10 @@ import { MatInputModule } from '@angular/material/input';
     }
   `,
   template: `
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
     <mat-form-field>
       <mat-label>Search by Job Name</mat-label>
       <input matInput [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" placeholder="Ex. myJob">
@@ -76,6 +82,7 @@ export class JobInstanceList implements OnInit {
   protected pageSize = signal(10);
   protected pageIndex = signal(0);
   protected searchTerm = signal('');
+  protected loading = signal(false);
 
   protected displayedColumns: string[] = ['id', 'jobName', 'executionCount', 'lastExecutionStatus'];
 
@@ -99,13 +106,20 @@ export class JobInstanceList implements OnInit {
   }
 
   private fetchJobInstances() {
+    this.loading.set(true);
     let url = `/api/job-instances?index=${this.pageIndex()}&size=${this.pageSize()}`;
     if (this.searchTerm()) {
       url += `&jobName=${this.searchTerm()}`;
     }
-    this.http.get<any>(url).subscribe(page => {
-      this.jobInstances.set(page.elements);
-      this.length.set(page.totalElements);
+    this.http.get<any>(url).subscribe({
+      next: (page) => {
+        this.jobInstances.set(page.elements);
+        this.length.set(page.totalElements);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+      }
     });
   }
 }
