@@ -1,5 +1,7 @@
-package app.abdhou;
+package app.abdhou.job;
 
+import app.abdhou.core.Page;
+import app.abdhou.core.PageRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

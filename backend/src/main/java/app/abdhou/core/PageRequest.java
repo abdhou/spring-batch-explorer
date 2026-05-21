@@ -1,4 +1,4 @@
-package app.abdhou;
+package app.abdhou.core;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

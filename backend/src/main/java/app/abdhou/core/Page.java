@@ -1,4 +1,4 @@
-package app.abdhou;
+package app.abdhou.core;
 
 import java.util.List;
 
