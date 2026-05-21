@@ -1,3 +1,7 @@
-##
+###
 GET http://localhost:8080/api/job-instances?index=1&size=10
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/job-instances/1
 Content-Type: application/json

@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.jooq.impl.DSL.*;
 
@@ -56,5 +57,38 @@ public class JobInstanceRepository {
                 .fetchInto(JobInstance.class);
 
         return new Page<>(elements, pageRequest.index(), pageRequest.size(), totalElements);
+    }
+
+    public Optional<JobInstance> getJobInstanceById(long id) {
+        var ji = table("batch_job_instance");
+        var je = table("batch_job_execution");
+
+        var latestExecution = dsl.select(
+                        field("job_instance_id"),
+                        field("status"),
+                        rowNumber().over().partitionBy(field("job_instance_id")).orderBy(field("job_execution_id").desc()).as("rn")
+                )
+                .from(je)
+                .asTable("latest_execution");
+
+        return dsl.select(
+                        field(ji.getName() + ".job_instance_id", Long.class),
+                        field(ji.getName() + ".job_name", String.class),
+                        count(field(je.getName() + ".job_execution_id")).as("execution_count"),
+                        field("le.status", String.class).as("last_execution_status")
+                )
+                .from(ji)
+                .leftJoin(je).on(field(ji.getName() + ".job_instance_id").eq(field(je.getName() + ".job_instance_id")))
+                .leftJoin(latestExecution.as("le")).on(
+                        field(ji.getName() + ".job_instance_id").eq(field("le.job_instance_id"))
+                                .and(field("le.rn").eq(1))
+                )
+                .where(field(ji.getName() + ".job_instance_id").eq(id))
+                .groupBy(
+                        field(ji.getName() + ".job_instance_id"),
+                        field(ji.getName() + ".job_name"),
+                        field("le.status")
+                )
+                .fetchOptionalInto(JobInstance.class);
     }
 }

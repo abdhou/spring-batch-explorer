@@ -1,5 +1,6 @@
 package app.abdhou.job;
 
+import app.abdhou.core.NotFoundException;
 import app.abdhou.core.Page;
 import app.abdhou.core.PageRequest;
 import jakarta.validation.Valid;
@@ -22,5 +23,12 @@ public class JobInstanceController {
         return ResponseEntity.ok(
             jobInstanceRepository.getJobInstances(jobName, pageRequest)
         );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<JobInstance> getJobInstanceById(@PathVariable long id) {
+        return jobInstanceRepository.getJobInstanceById(id)
+            .map(ResponseEntity::ok)
+            .orElseThrow(() -> new NotFoundException("Job instance not found with id: " + id));
     }
 }
