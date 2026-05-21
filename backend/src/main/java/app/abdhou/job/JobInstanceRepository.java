@@ -1,4 +1,6 @@
-package app.abdhou;
+package app.abdhou.job;
+import app.abdhou.core.Page;
+import app.abdhou.core.PageRequest;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 

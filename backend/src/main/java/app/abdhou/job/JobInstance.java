@@ -1,4 +1,4 @@
-package app.abdhou;
+package app.abdhou.job;
 
 public record JobInstance(
     long id,

@@ -1,4 +1,4 @@
-package app.abdhou;
+package app.abdhou.core;
 
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.validator.internal.engine.path.PathImpl;

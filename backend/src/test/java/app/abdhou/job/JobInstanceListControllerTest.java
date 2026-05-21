@@ -1,5 +1,8 @@
-package app.abdhou;
+package app.abdhou.job;
 
+import app.abdhou.core.ApiExceptionHandler;
+import app.abdhou.core.Page;
+import app.abdhou.core.PageRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -17,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = JobInstanceController.class)
 @Import(ApiExceptionHandler.class)
-class JobInstanceControllerTest {
+class JobInstanceListControllerTest {
 
     @Autowired
     private MockMvcTester mvc;
