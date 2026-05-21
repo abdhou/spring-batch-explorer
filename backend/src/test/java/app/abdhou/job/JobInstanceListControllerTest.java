@@ -1,12 +1,10 @@
 package app.abdhou.job;
 
-import app.abdhou.core.ApiExceptionHandler;
 import app.abdhou.core.Page;
 import app.abdhou.core.PageRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
@@ -19,7 +17,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = JobInstanceController.class)
-@Import(ApiExceptionHandler.class)
 class JobInstanceListControllerTest {
 
     @Autowired
